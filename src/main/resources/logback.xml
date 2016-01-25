@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="rollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+        <File>logs/signatur.log</File>
+        <encoder>
+            <pattern>%d %t %-5p %c %m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <maxIndex>99</maxIndex>
+            <FileNamePattern>logs/signatur.log.%i</FileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>1MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+    <logger name="org.springframework.context.support.SimpleThreadScope" level="ERROR"/>
+    <logger name="no.difi.signature.testclient" level="INFO"/>
+    <root level="WARN">
+        <appender-ref ref="rollingFileAppender"/>
+    </root>
+</configuration>
