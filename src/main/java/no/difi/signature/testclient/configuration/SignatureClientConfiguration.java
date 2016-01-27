@@ -2,7 +2,9 @@ package no.difi.signature.testclient.configuration;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.SimpleThreadScope;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,6 +29,8 @@ import org.springframework.web.servlet.view.JstlView;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import javax.validation.ValidatorFactory;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 
@@ -60,6 +64,16 @@ public class SignatureClientConfiguration extends WebMvcConfigurerAdapter implem
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
+	}
+
+
+	@Bean
+	public static CustomScopeConfigurer customScopeConfigurer() {
+		CustomScopeConfigurer customScopeConfigurer = new CustomScopeConfigurer();
+		Map<String, Object> scopes = new HashMap<String, Object>();
+		scopes.put("thread", new SimpleThreadScope());
+		customScopeConfigurer.setScopes(scopes);
+		return customScopeConfigurer;
 	}
 
 	@Bean

@@ -11,7 +11,32 @@
 		<div class="container">
 
 			<jsp:include page="menu.jsp"><jsp:param name="showActive" value="active"/></jsp:include>
-			<p>Liste med signaturer.....</p>
+			<c:choose>
+				<c:when test="${empty signaturePage.content}">
+					<p>Ingen signeringer.</p>
+				</c:when>
+				<c:otherwise>
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th>ID</th>
+							<th>SSN</th>
+							<th>Tittel</th>
+						</tr>
+						</thead>
+						<tbody>
+						<c:forEach items="${signaturePage.content}" var="signature">
+							<tr>
+								<spring:url value="/client/signatures/${signature.id}" var="signatureUrl" />
+								<td><a href="${signatureUrl}">${signature.id}</a></td>
+								<td><a href="${signatureUrl}">${signature.ssn}</a></td>
+								<td><a href="${signatureUrl}">${signature.document.title}</a></td>
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<br />
 	</body>

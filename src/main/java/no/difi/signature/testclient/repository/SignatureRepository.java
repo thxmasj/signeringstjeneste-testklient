@@ -15,8 +15,8 @@ public interface SignatureRepository extends JpaRepository<Signature, Long> {
 	public List<Signature> findById(String Id);
 
 
-	//@Query("select s.id as id, s.ssn, from Signature s order by s.id desc")
-	//public Page<Object[]> list(Pageable pageable);
+	@Query("select s.id as id, s.ssn as ssn from Signature s")
+	public Page<Object[]> list(Pageable pageable);
 
 	/*
 	@Query("select m.id as id, m.date as date, m.ssn, m.document.title, m.digital, m.fysiskPost.adressat.navn from Message m order by m.id desc")

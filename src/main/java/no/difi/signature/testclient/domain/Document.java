@@ -9,10 +9,10 @@ public class Document {
 	@GeneratedValue
 	private Long id;
 
-	/*
+
 	@ManyToOne
-	private Message message;
-	*/
+	private Signature signature;
+
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -32,16 +32,16 @@ public class Document {
 		this.id = id;
 	}
 	
-	/*
-	public Message getMessage() {
-		return message;
+
+	public Signature getSignature() {
+		return signature;
 	}
 
 
-	public void setMessage(Message message) {
-		this.message = message;
+	public void setSignature(Signature signature) {
+		this.signature = signature;
 	}
-	*/
+
 	public byte[] getContent() {
 		return content;
 	}

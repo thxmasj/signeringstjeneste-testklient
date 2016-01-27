@@ -83,21 +83,11 @@ public class SignatureController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures")
-	public String show_signature_list_page(Model model, Long pageNumber) {
+	public String show_signature_list_page(Model model, @RequestParam(defaultValue = "0") int pageNumber) {
 
-		/* Page-versjon
 		Page<Signature> signaturePage;
 		signaturePage = signatureService.getSignatures(pageNumber);
 		model.addAttribute("signaturePage", signaturePage);
-		*/
-
-		List<Signature> signatures = signatureService.getAllSignatures();
-
-		System.out.println("List all signatures");
-		for (int i = 0; i < signatures.size(); i++) {
-			System.out.println("SIGNATUR: " + signatures.get(i).toString());
-			System.out.println("ID: " + signatures.get(i).getId() + " - SSN: " + signatures.get(i).getSsn());
-		}
 
 		return "show_signature_list_page";
 	}

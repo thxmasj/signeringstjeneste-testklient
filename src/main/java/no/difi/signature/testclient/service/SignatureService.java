@@ -49,17 +49,17 @@ public class SignatureService {
 
 	public List<Signature> getAllSignatures() {
 		return signatureRepository.findAll();
-
 	}
 
-/*
+
+
 	public Page<Signature> getSignatures(int pageNumber) {
 		PageRequest pageRequest = buildPageRequest(pageNumber);
 		Page<Object[]> rawSignaturePage = signatureRepository.list(pageRequest);
 		Page<Signature> SignaturePage = toSignaturePage(rawSignaturePage, pageRequest);
 		return SignaturePage;
 	}
-*/
+
 
 	private PageRequest buildPageRequest(int pageNumber) {
 		return new PageRequest(pageNumber, NUMBER_OF_SIGNATURES_PER_PAGE);
