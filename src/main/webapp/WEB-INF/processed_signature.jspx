@@ -11,7 +11,7 @@
 		<div class="container">
 
 			<jsp:include page="menu.jsp"></jsp:include>
-			<p>Signert dokument.... bla bla bla</p>
+			<p>SigneringsID: ${signature.id} utført av ${signature.ssn}</p>
 		</div>
 	</body>
 </html>

@@ -56,11 +56,9 @@ public class SignatureController {
 
 
 	@RequestMapping(method = RequestMethod.GET, value = "/", produces = "text/html")
-	public String show_signature_page(Model model, @RequestParam(required = false) Long copy) throws ChangeSetPersister.NotFoundException {
+	public String show_signature_page(Model model) throws ChangeSetPersister.NotFoundException {
 		SignatureCommand signatureCommand = new SignatureCommand();
-
 		model.addAttribute("signatureCommand", signatureCommand);
-
 		return "signature_page";
 	}
 
@@ -77,9 +75,17 @@ public class SignatureController {
 		Signature sig = new Signature();
 		sig.setSsn(signatureCommand.getSsn());
 		signatureService.doSignature(sig);
-
 		return "redirect:/client/signatures/" + sig.getId();
+	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/signatures/{id}")
+	public String show_message_page(@PathVariable Long id, Model model) throws ChangeSetPersister.NotFoundException {
+		Signature sig = signatureService.getSignature(id);
+		if (sig == null) {
+			throw new ChangeSetPersister.NotFoundException();
+		}
+		model.addAttribute("signature", sig);
+		return "processed_signature";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures")
