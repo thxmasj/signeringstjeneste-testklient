@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
+	<jsp:directive.page contentType="text/html" />
+	<jsp:output omit-xml-declaration="yes" doctype-system="about:legacy-compat" doctype-root-element="html"/>
+	<head>
+		<title>Testklient</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+	</head>
+	<body>
+		<div class="container">
+
+			<jsp:include page="menu.jsp"><jsp:param name="sendActive" value="active"/></jsp:include>
+
+			<!--
+
+PBLEID-10501	Som bruker av signeringstjenesten skal jeg kunne laste opp et dokument som skal overførast til Signeringstenesta for signering	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10504	Testklienten skal ha støtte for bruk av databehandler på vegne av en behandlingsansvarlig	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10505	Som bruker ønsker jeg å kunne velge mellom forskjellige databehandlere som sender signeringsoppdrag	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10508	Som Tester av signeringstjenesten ønsker jeg å kunne velge forskjellig input til sigeringstjenesten for å konfigurer signeringsoppdrag som sendes inn	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10516	Det skal gå an å hente ut dokumentet og den signerte dokumentpakken som sendes til Signeringstenesta	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10517	Testklienten skal vise alle requester og responsar knytt til signeringsoppdraget som sendes inn	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10518	Som tester ønsker jeg å kunne se status på signeringsoppdrag i testklienten.	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10522	Som tjenesteeier ønsker jeg å kunne revokere signeringsoppdrag	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10587	Som tester av signingstjenesten skal jeg ha mulighet for å teste asynkron signering	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10588	Som tester av signingstjenesten ønsker jeg mulighet for å teste synkron signering	Requirment	OPEN	Unassigned
+Actions
+PBLEID-10589	Som tester skal jeg kunne laste ned de signerte dokumentene i alle tilgjengelige format	Requirment	OPEN	Unassigned
+
+-->
+
+
+			<form:form method="POST" action="signatures" commandName="signatureCommand" enctype="multipart/form-data" cssClass="form-horizontal" role="form">
+				<div class="form-group ${errors.hasFieldErrors('ssn') ? 'has-error' : ''}">
+					<form:label path="ssn" cssClass="col-sm-2 control-label">Fødselsnummer<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
+					<div class="col-sm-10">
+						<input name="ssn" id="ssn" type="text" class="form-control" autocomplete="off" placeholder="Oppgi mottakers fødselsnummer" value="${signatureCommand.ssn}"/>
+					</div>
+				</div>
+
+
+				<div class="form-group ${errors.hasFieldErrors('document') ? 'has-error' : ''}">
+					<form:label path="document" cssClass="col-sm-2 control-label">Signeringsdokument<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
+					<div class="col-sm-10">
+						<input name="document" id="document" type="file" />
+					</div>
+				</div>
+
+				<!--
+
+				<div class="form-group ${errors.hasFieldErrors('keyPairAlias') ? 'has-error' : ''}">
+					<form:label path="keyPairAlias" cssClass="col-sm-2 control-label">Databehandler<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
+					<div class="col-sm-10">
+						<select class="form-control" name="keyPairAlias" id="keyPairAlias">
+							<c:forEach items="${keyPairAliases}" var="keyPairAlias">
+								<c:choose>
+									<c:when test="${keyPairAlias == signatureCommand.keyPairAlias}">
+										<option selected="selected" value="${keyPairAlias}">${keyPairAlias}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${keyPairAlias}">${keyPairAlias}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">Behandlingsansvarlig</div>
+					<div class="panel-body">
+						<div class="form-group ${errors.hasFieldErrors('senderOrgNumber') ? 'has-error' : ''}">
+							<form:label path="senderOrgNumber" cssClass="col-sm-2 control-label">Organisasjonsnummer<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
+							<div class="col-sm-10">
+								<input name="senderOrgNumber" id="senderOrgNumber" type="text" class="form-control" autocomplete="off" placeholder="Organisasjonsnummer" value="${signatureCommand.senderOrgNumber}" />
+							</div>
+						</div>
+					</div>
+				</div>
+		-->
+
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Signer dokument</button>
+					</div>
+				</div>
+			</form:form>
+
+		</div>
+		<br />
+		<script src="//code.jquery.com/jquery-2.1.0.min.js"><!-- --></script>
+		<spring:url value="/common_message.js" var="commonMessageJavascriptUrl"/>
+		<spring:url value="/send_message_page.js" var="sendMessagePageJavascriptUrl"/>
+		<script src="${commonMessageJavascriptUrl}"><!-- --></script>
+		<script src="${sendMessagePageJavascriptUrl}"><!-- --></script>
+	</body>
+</html>

@@ -6,10 +6,10 @@
 </div>
 
 <ul class="nav nav-tabs">
-    <spring:url value="/client/messages" var="showMessagesUrl" />
-    <spring:url value="/client/" var="sendMessageUrl" />
-    <li class="${param.sendActive}"><a href="${sendMessageUrl}">Send</a></li>
-    <li class="${param.showActive}"><a href="${showMessagesUrl}">Vis</a></li>
+    <spring:url value="/client/signatures" var="showSignaturesUrl" />
+    <spring:url value="/client/" var="doSignatureUrl" />
+    <li class="${param.sendActive}"><a href="${doSignatureUrl}">Signer</a></li>
+    <li class="${param.showActive}"><a href="${showSignaturesUrl}">Tidligere signaturer</a></li>
 
 </ul>
 
