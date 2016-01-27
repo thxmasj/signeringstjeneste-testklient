@@ -52,12 +52,14 @@ public class SignatureService {
 
 	}
 
+/*
 	public Page<Signature> getSignatures(int pageNumber) {
 		PageRequest pageRequest = buildPageRequest(pageNumber);
 		Page<Object[]> rawSignaturePage = signatureRepository.list(pageRequest);
 		Page<Signature> SignaturePage = toSignaturePage(rawSignaturePage, pageRequest);
 		return SignaturePage;
 	}
+*/
 
 	private PageRequest buildPageRequest(int pageNumber) {
 		return new PageRequest(pageNumber, NUMBER_OF_SIGNATURES_PER_PAGE);
@@ -78,11 +80,11 @@ public class SignatureService {
 		Signature.setId((Long) rawSignature[0]);
 		Signature.setSsn((String) rawSignature[1]);
 		Document document = new Document();
-		document.setTitle((String) rawSignature[3]);
+		document.setTitle("DUMMY");   //((String) rawSignature[3]);
 		Signature.setDocument(document);
 		return Signature;
 	}
-	
+
 	
     public void deleteSignature(Long id) {
 		signatureRepository.delete(id);

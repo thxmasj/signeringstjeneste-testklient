@@ -83,7 +83,7 @@ public class SignatureController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures")
-	public String show_signature_list_page(Model model, long pageNumber) {
+	public String show_signature_list_page(Model model, Long pageNumber) {
 
 		/* Page-versjon
 		Page<Signature> signaturePage;
