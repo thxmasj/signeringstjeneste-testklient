@@ -17,31 +17,15 @@ public class Signature {
 	@Ssn
 	private String ssn;
 
-
-	private String conversationId;
-
-
 	@OneToOne(cascade = CascadeType.ALL)
 	private Document document;
 
-	/*
-	@NotNull
-	private String senderOrgNumber;
+	private String title;
 
-	private String senderId;
+	private String insensitiveTitle;
 
-	@NotNull
-	private String keyPairAlias;
-
-
-
-	private boolean saveBinaryContent;
-
-	*/
 	public Signature() {
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -50,7 +34,6 @@ public class Signature {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	
 	public String getSsn() {
 		return ssn;
@@ -60,15 +43,6 @@ public class Signature {
         this.ssn = ssn;
     }
 
-	public String getConversationId() {
-		return conversationId;
-	}
-
-	public void setConversationId(String conversationId) {
-		this.conversationId = conversationId;
-	}
-
-
 	public Document getDocument() {
 		return document;
 	}
@@ -76,44 +50,20 @@ public class Signature {
 	public void setDocument(Document document) {
         this.document = document;
     }
-	/*
 
-	
-	public String getSenderOrgNumber() {
-		return senderOrgNumber;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setSenderOrgNumber(String senderOrgNumber) {
-		this.senderOrgNumber = senderOrgNumber;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getSenderId() {
-		return senderId;
+	public String getInsensitiveTitle() {
+		return insensitiveTitle;
 	}
 
-	public void setSenderId(String senderId) {
-		this.senderId = senderId;
+	public void setInsensitiveTitle(String insensitiveTitle) {
+		this.insensitiveTitle = insensitiveTitle;
 	}
-	
-
-	
-	public String getKeyPairAlias() {
-		return keyPairAlias;
-	}
-
-	public void setKeyPairAlias(String keyPairAlias) {
-		this.keyPairAlias = keyPairAlias;
-	}
-
-
-
-	public boolean getSaveBinaryContent() {
-		return saveBinaryContent;
-	}
-
-	public void setSaveBinaryContent(boolean saveBinaryContent) {
-		this.saveBinaryContent = saveBinaryContent;
-	}
-
-	*/
 }

@@ -74,6 +74,9 @@ public class SignatureController {
 		//TODO: DO THE SIGNING....
 		Signature sig = new Signature();
 		sig.setSsn(signatureCommand.getSsn());
+		sig.setDocument(getDocument(signatureCommand));
+		sig.setTitle((signatureCommand.getTitle()));
+		sig.setInsensitiveTitle(signatureCommand.getInsensitiveTitle());
 		signatureService.doSignature(sig);
 		return "redirect:/client/signatures/" + sig.getId();
 	}

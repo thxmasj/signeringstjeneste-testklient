@@ -16,21 +16,20 @@ public class SignatureCommand {
 	@Ssn(message = "Ugyldig fødselsnummer.")
 	private String ssn;
 
-	//@Size(min = 1, message = "Du må oppgi tittel.")
-	//@NotNull
+	@Size(min = 1, message = "Du må oppgi tittel.")
+	@NotNull
 	private String title;
+
+	@Size(min = 1, message = "Du må oppgi ikke-sensitiv tittel.")
+	@NotNull
+	private String insensitiveTitle;
 
 	@Document(message = "Du må oppgi hoveddokument.")
 	private MultipartFile document;
 
-	//@NotNull
-	private String senderOrgNumber;
-	
-	private String senderId;
 
-	//@NotNull
-	private String keyPairAlias;
-
+	public SignatureCommand() {
+	}
 
 	public String getSsn() {
 		return ssn;
@@ -48,7 +47,12 @@ public class SignatureCommand {
 		this.title = title;
 	}
 
-	public SignatureCommand() {
+	public String getInsensitiveTitle() {
+		return insensitiveTitle;
+	}
+
+	public void setInsensitiveTitle(String insensitiveTitle) {
+		this.insensitiveTitle = insensitiveTitle;
 	}
 
 	public MultipartFile getDocument() {
@@ -59,29 +63,6 @@ public class SignatureCommand {
 		this.document = document;
 	}
 
-	public String getSenderOrgNumber() {
-		return senderOrgNumber;
-	}
 
-	public void setSenderOrgNumber(String senderOrgNumber) {
-		this.senderOrgNumber = senderOrgNumber;
-	}
-
-	public String getSenderId() {
-		return senderId;
-	}
-
-	public void setSenderId(String senderId) {
-		this.senderId = senderId;
-	}
-
-	
-	public String getKeyPairAlias() {
-		return keyPairAlias;
-	}
-
-	public void setKeyPairAlias(String keyPairAlias) {
-		this.keyPairAlias = keyPairAlias;
-	}
 
 }

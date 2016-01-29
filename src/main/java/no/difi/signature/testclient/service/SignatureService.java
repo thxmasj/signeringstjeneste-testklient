@@ -52,7 +52,6 @@ public class SignatureService {
 	}
 
 
-
 	public Page<Signature> getSignatures(int pageNumber) {
 		PageRequest pageRequest = buildPageRequest(pageNumber);
 		Page<Object[]> rawSignaturePage = signatureRepository.list(pageRequest);
@@ -80,7 +79,7 @@ public class SignatureService {
 		Signature.setId((Long) rawSignature[0]);
 		Signature.setSsn((String) rawSignature[1]);
 		Document document = new Document();
-		document.setTitle("DUMMY");   //((String) rawSignature[3]);
+		document.setTitle((String) rawSignature[2]);
 		Signature.setDocument(document);
 		return Signature;
 	}

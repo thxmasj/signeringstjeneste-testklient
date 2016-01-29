@@ -46,7 +46,18 @@ PBLEID-10589	Som tester skal jeg kunne laste ned de signerte dokumentene i alle 
 						<input name="ssn" id="ssn" type="text" class="form-control" autocomplete="off" placeholder="Oppgi mottakers fødselsnummer" value="${signatureCommand.ssn}"/>
 					</div>
 				</div>
-
+				<div class="form-group ${errors.hasFieldErrors('title') ? 'has-error' : ''}">
+					<form:label path="title" cssClass="col-sm-2 control-label">Tittel<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
+					<div class="col-sm-10">
+						<input name="title" id="title" type="text" class="form-control" autocomplete="off" placeholder="Tittel" value="${signatureCommand.title}"/>
+					</div>
+				</div>
+				<div class="form-group ${errors.hasFieldErrors('insensitiveTitle') ? 'has-error' : ''}">
+					<form:label path="insensitiveTitle" cssClass="col-sm-2 control-label">Ikke-sensitiv tittel<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
+					<div class="col-sm-10">
+						<input name="insensitiveTitle" id="insensitiveTitle" type="text" class="form-control" autocomplete="off" placeholder="Ikke-sensitiv tittel" value="${signatureCommand.insensitiveTitle}"/>
+					</div>
+				</div>
 
 				<div class="form-group ${errors.hasFieldErrors('document') ? 'has-error' : ''}">
 					<form:label path="document" cssClass="col-sm-2 control-label">Signeringsdokument<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
