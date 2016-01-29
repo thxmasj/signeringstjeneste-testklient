@@ -11,7 +11,17 @@
 		<div class="container">
 
 			<jsp:include page="menu.jsp"></jsp:include>
-			<p>SigneringsID: ${signature.id} utført av ${signature.ssn}</p>
+			<p>SigneringsID: ${signature.id} utført av: ${signature.ssn} på dokument: ${signature.title}</p>
+			<p>Sendt Dokument:
+			<table>
+				<tr><td>Filename: </td><td>${signature.document.filename}</td></tr>
+				<tr><td>Content: </td><td>${signature.document.content}</td></tr>
+				<tr><td>Title: </td><td>${signature.document.title}</td></tr>
+				<tr><td>Mimetype: </td><td>${signature.document.mimetype}</td></tr>
+				<spring:url value="/client/signatures/documents/${signature.document.id}" var="downloadUrl" />
+				<tr><td>Last ned: </td><td><a href="${downloadUrl}">her</a></td></tr>
+			</table>
+			</p>
 		</div>
 	</body>
 </html>

@@ -4,6 +4,7 @@ package no.difi.signature.testclient.web;
 import no.difi.signature.testclient.domain.Document;
 import no.difi.signature.testclient.domain.Signature;
 import no.difi.signature.testclient.service.SignatureService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -23,7 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -101,6 +106,17 @@ public class SignatureController {
 		return "show_signature_list_page";
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/signatures/documents/{id}")
+	public void download_Signature_document(@PathVariable Long id, HttpServletResponse response) throws ChangeSetPersister.NotFoundException, IOException {
+		Document document = signatureService.getDocument(id);
+		if (document == null || document.getContent() == null) {
+			throw new ChangeSetPersister.NotFoundException();
+		}
+		response.addHeader("Content-Disposition", "attachment; filename=\"" + document.getFilename() + "\"");
+		response.setContentType(document.getMimetype());
+		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(document.getContent()));
+		IOUtils.copy(inputStream, response.getOutputStream());
+	}
 
 	private Document getDocument(SignatureCommand signatureCommand) throws IOException {
 		Document document = new Document();

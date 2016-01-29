@@ -24,6 +24,10 @@ public class Signature {
 
 	private String insensitiveTitle;
 
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private byte[] asic;
+
 	public Signature() {
 	}
 
@@ -65,5 +69,13 @@ public class Signature {
 
 	public void setInsensitiveTitle(String insensitiveTitle) {
 		this.insensitiveTitle = insensitiveTitle;
+	}
+
+	public byte[] getAsic() {
+		return asic;
+	}
+
+	public void setAsic(byte[] asic) {
+		this.asic = asic;
 	}
 }

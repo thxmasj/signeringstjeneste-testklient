@@ -153,4 +153,6 @@ public class SignatureClientConfiguration extends WebMvcConfigurerAdapter implem
 		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
 		return jpaTransactionManager;
 	}
+
+
 }
