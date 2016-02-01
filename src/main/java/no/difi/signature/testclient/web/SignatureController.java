@@ -4,6 +4,7 @@ package no.difi.signature.testclient.web;
 import no.difi.signature.testclient.domain.Document;
 import no.difi.signature.testclient.domain.Signature;
 import no.difi.signature.testclient.service.SignatureService;
+import no.digipost.signature.client.direct.DirectJobResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,7 +40,6 @@ public class SignatureController {
 	@Autowired
 	private Environment environment;
 
-
 	@Autowired
 	private SignatureService signatureService;
 
@@ -52,6 +52,9 @@ public class SignatureController {
 	@Autowired
 	@Qualifier("mvcValidator")
 	private Validator validator;
+
+	@Autowired
+	private DirectClientController directClient;
 
 	@InitBinder
 	protected void initBinder(WebDataBinder webDataBinder) {
@@ -76,7 +79,7 @@ public class SignatureController {
 			model.addAttribute("errors", bindingResult);
 			return "signature_page";
 		}
-		//TODO: DO THE SIGNING....
+		DirectJobResponse response = directClient.createJob(signatureCommand.getSsn());
 		Signature sig = new Signature();
 		sig.setSsn(signatureCommand.getSsn());
 		sig.setDocument(getDocument(signatureCommand));
