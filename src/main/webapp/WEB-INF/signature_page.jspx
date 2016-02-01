@@ -63,8 +63,14 @@ PBLEID-10589	Som tester skal jeg kunne laste ned de signerte dokumentene i alle 
 					<form:label path="document" cssClass="col-sm-2 control-label">Signeringsdokument<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
 					<div class="col-sm-10">
 						<input name="document" id="document" type="file" />
+						<div class="panel panel-default" id="mimeElement">
+							<div class="panel-heading">Mimetype: (kan overskrives)</div>
+							<div class="panel-body"><!-- --></div>
+						</div>
 					</div>
 				</div>
+
+
 
 				<!--
 

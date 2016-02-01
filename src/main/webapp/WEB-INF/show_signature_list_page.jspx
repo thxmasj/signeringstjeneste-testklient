@@ -25,12 +25,12 @@
 						</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${signaturePage.content}" var="signature">
+						<c:forEach items="${signaturePage.content}" var="signatureJob">
 							<tr>
-								<spring:url value="/client/signatures/${signature.id}" var="signatureUrl" />
-								<td><a href="${signatureUrl}">${signature.id}</a></td>
-								<td><a href="${signatureUrl}">${signature.ssn}</a></td>
-								<td><a href="${signatureUrl}">${signature.document.title}</a></td>
+								<spring:url value="/client/signatures/${signatureJob.id}" var="signatureUrl" />
+								<td><a href="${signatureUrl}">${signatureJob.id}</a></td>
+								<td><a href="${signatureUrl}">${signatureJob.ssn}</a></td>
+								<td><a href="${signatureUrl}">${signatureJob.document.title}</a></td>
 							</tr>
 						</c:forEach>
 						</tbody>

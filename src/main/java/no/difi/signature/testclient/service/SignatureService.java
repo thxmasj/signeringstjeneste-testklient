@@ -9,13 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,24 +34,24 @@ public class SignatureService {
 	private ConfigurationService configurationService;
 
 
-    public void doSignature(Signature signature)  {
-		signatureRepository.save(signature);
+    public void doSignature(SignatureJob signatureJob)  {
+		signatureRepository.save(signatureJob);
 	}
 
-	public Signature getSignature(Long id) {
+	public SignatureJob getSignature(Long id) {
 		return signatureRepository.findOne(id);
 
 	}
 
-	public List<Signature> getAllSignatures() {
+	public List<SignatureJob> getAllSignatures() {
 		return signatureRepository.findAll();
 	}
 
 
-	public Page<Signature> getSignatures(int pageNumber) {
+	public Page<SignatureJob> getSignatures(int pageNumber) {
 		PageRequest pageRequest = buildPageRequest(pageNumber);
 		Page<Object[]> rawSignaturePage = signatureRepository.list(pageRequest);
-		Page<Signature> SignaturePage = toSignaturePage(rawSignaturePage, pageRequest);
+		Page<SignatureJob> SignaturePage = toSignaturePage(rawSignaturePage, pageRequest);
 		return SignaturePage;
 	}
 
@@ -64,24 +60,24 @@ public class SignatureService {
 		return new PageRequest(pageNumber, NUMBER_OF_SIGNATURES_PER_PAGE);
 	}
 
-	private Page<Signature> toSignaturePage(Page<Object[]> rawSignaturePage, PageRequest pageRequest) {
-		List<Signature> Signatures = new ArrayList<Signature>();
+	private Page<SignatureJob> toSignaturePage(Page<Object[]> rawSignaturePage, PageRequest pageRequest) {
+		List<SignatureJob> signatureJobs = new ArrayList<SignatureJob>();
 		for (Object[] rawSignature : rawSignaturePage.getContent()) {
-			Signature Signature = convertToSignature(rawSignature);
-			Signatures.add(Signature);
+			SignatureJob SignatureJob = convertToSignature(rawSignature);
+			signatureJobs.add(SignatureJob);
 		}
-		return new PageImpl<Signature>(Signatures, pageRequest, rawSignaturePage.getTotalElements());
+		return new PageImpl<SignatureJob>(signatureJobs, pageRequest, rawSignaturePage.getTotalElements());
 	}
 
-	private Signature convertToSignature(Object[] rawSignature) {
+	private SignatureJob convertToSignature(Object[] rawSignature) {
 		// Refer to SignatureRepository.list() for field order
-		Signature Signature = new Signature();
-		Signature.setId((Long) rawSignature[0]);
-		Signature.setSsn((String) rawSignature[1]);
+		SignatureJob SignatureJob = new SignatureJob();
+		SignatureJob.setId((Long) rawSignature[0]);
+		SignatureJob.setSsn((String) rawSignature[1]);
 		Document document = new Document();
 		document.setTitle((String) rawSignature[2]);
-		Signature.setDocument(document);
-		return Signature;
+		SignatureJob.setDocument(document);
+		return SignatureJob;
 	}
 
 	
