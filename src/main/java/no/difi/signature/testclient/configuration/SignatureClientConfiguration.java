@@ -36,6 +36,7 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @ComponentScan( { "no.difi.signature.testclient.web", "no.difi.signature.testclient.service", "no.difi.signature.testclient.validation" } )
+@Import(PostenDirectClientConfiguration.class)
 @PropertySources( {
 	@PropertySource(value = "classpath:configuration.properties"), // Defaults
 	@PropertySource(value = "file:/etc/opt/signatureclient/configuration.properties", ignoreResourceNotFound = true) // Optional overrides
@@ -45,26 +46,15 @@ import java.util.concurrent.Executor;
 @EnableTransactionManagement
 @EnableScheduling
 //@EnableAsync(mode = AdviceMode.PROXY, proxyTargetClass = true, order = 3)
-public class SignatureClientConfiguration extends WebMvcConfigurerAdapter implements AsyncConfigurer {
+public class SignatureClientConfiguration extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	private Environment environment;
 
-	@Override
-	public Executor getAsyncExecutor() {
-		//TODO:
-		return null;
-	}
-
-	@Override
-	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-		return null;
-	}
-
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
+//	@Override
+//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//		configurer.enable();
+//	}
 
 
 	@Bean

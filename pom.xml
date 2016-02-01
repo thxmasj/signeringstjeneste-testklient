@@ -14,10 +14,40 @@
 	</properties>
 
 	<dependencies>
+		<!--<dependency>-->
+			<!--<groupId>org.glassfish.jersey.core</groupId>-->
+			<!--<artifactId>jersey-client</artifactId>-->
+			<!--<version>2.23-SNAPSHOT</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.glassfish.jersey.core</groupId>-->
+			<!--<artifactId>jersey-common</artifactId>-->
+			<!--<version>2.23-SNAPSHOT</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.glassfish.jersey.media</groupId>-->
+			<!--<artifactId>jersey-media-multipart</artifactId>-->
+			<!--<version>2.23-SNAPSHOT</version>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>no.digipost.signature</groupId>
+			<artifactId>signature-api-client-java</artifactId>
+			<version>1.0-BETA1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.2.4.RELEASE</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.core</groupId>-->
+			<!--<artifactId>jackson-core</artifactId>-->
+			<!--<version>2.7.0</version>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -34,7 +64,7 @@
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>javax.servlet.jsp.jstl</artifactId>
-			<version>1.2.1</version>
+			<version>1.2.4</version>
 			<scope>runtime</scope>
 			<exclusions>
 				<exclusion>
@@ -55,7 +85,17 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.2.Final</version>
+			<version>5.2.3.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>2.2.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -88,7 +128,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.190</version>
+			<version>1.4.191</version>
 		</dependency>
 		<dependency>
             <groupId>junit</groupId>
@@ -145,7 +185,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.38</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>2.1.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -174,6 +219,20 @@
 				<configuration>
 					<path>/</path>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+				<version>1.1.5</version>
+				<executions>
+					<execution>
+						<id>generate-rebel-xml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
