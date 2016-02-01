@@ -15,7 +15,7 @@
         </triggeringPolicy>
     </appender>
     <logger name="org.springframework.context.support.SimpleThreadScope" level="ERROR"/>
-    <logger name="no.difi.signature.testclient" level="INFO"/>
+    <logger name="no.difi.signatureJob.testclient" level="INFO"/>
     <root level="WARN">
         <appender-ref ref="rollingFileAppender"/>
     </root>

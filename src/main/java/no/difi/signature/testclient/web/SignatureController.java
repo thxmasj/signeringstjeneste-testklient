@@ -2,7 +2,7 @@ package no.difi.signature.testclient.web;
 
 
 import no.difi.signature.testclient.domain.Document;
-import no.difi.signature.testclient.domain.Signature;
+import no.difi.signature.testclient.domain.SignatureJob;
 import no.difi.signature.testclient.service.SignatureService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +28,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
 
 
 @Controller
@@ -77,7 +74,7 @@ public class SignatureController {
 			return "signature_page";
 		}
 		//TODO: DO THE SIGNING....
-		Signature sig = new Signature();
+		SignatureJob sig = new SignatureJob();
 		sig.setSsn(signatureCommand.getSsn());
 		sig.setDocument(getDocument(signatureCommand));
 		sig.setTitle((signatureCommand.getTitle()));
@@ -88,18 +85,18 @@ public class SignatureController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures/{id}")
 	public String show_message_page(@PathVariable Long id, Model model) throws ChangeSetPersister.NotFoundException {
-		Signature sig = signatureService.getSignature(id);
+		SignatureJob sig = signatureService.getSignature(id);
 		if (sig == null) {
 			throw new ChangeSetPersister.NotFoundException();
 		}
-		model.addAttribute("signature", sig);
+		model.addAttribute("signatureJob", sig);
 		return "processed_signature";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures")
 	public String show_signature_list_page(Model model, @RequestParam(defaultValue = "0") int pageNumber) {
 
-		Page<Signature> signaturePage;
+		Page<SignatureJob> signaturePage;
 		signaturePage = signatureService.getSignatures(pageNumber);
 		model.addAttribute("signaturePage", signaturePage);
 

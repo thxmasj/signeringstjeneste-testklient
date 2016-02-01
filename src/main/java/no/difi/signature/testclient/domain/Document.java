@@ -6,13 +6,8 @@ import javax.persistence.*;
 public class Document {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-
-
-	@ManyToOne
-	private Signature signature;
-
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -30,16 +25,6 @@ public class Document {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-
-	public Signature getSignature() {
-		return signature;
-	}
-
-
-	public void setSignature(Signature signature) {
-		this.signature = signature;
 	}
 
 	public byte[] getContent() {

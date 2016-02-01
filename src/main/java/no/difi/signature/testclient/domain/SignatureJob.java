@@ -8,10 +8,10 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-public class Signature {
+public class SignatureJob {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Ssn
@@ -28,7 +28,7 @@ public class Signature {
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] asic;
 
-	public Signature() {
+	public SignatureJob() {
 	}
 
 	public Long getId() {
