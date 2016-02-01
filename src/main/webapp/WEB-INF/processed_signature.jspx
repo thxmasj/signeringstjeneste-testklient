@@ -14,11 +14,11 @@
 			<p>SigneringsID: ${signatureJob.id} utført av: ${signatureJob.ssn} på dokument: ${signatureJob.title}</p>
 			<p>Sendt Dokument:
 			<table>
-				<tr><td>Filename: </td><td>${signatureJob.document.filename}</td></tr>
-				<tr><td>Content: </td><td>${signatureJob.document.content}</td></tr>
-				<tr><td>Title: </td><td>${signatureJob.document.title}</td></tr>
-				<tr><td>Mimetype: </td><td>${signatureJob.document.mimetype}</td></tr>
-				<spring:url value="/client/signatures/documents/${signatureJob.document.id}" var="downloadUrl" />
+				<tr><td>Filename: </td><td>${signatureJob.signedDocument.filename}</td></tr>
+				<tr><td>Content: </td><td>${signatureJob.signedDocument.content}</td></tr>
+				<tr><td>Title: </td><td>${signatureJob.signedDocument.title}</td></tr>
+				<tr><td>Mimetype: </td><td>${signatureJob.signedDocument.mimetype}</td></tr>
+				<spring:url value="/client/signatures/documents/${signatureJob.signedDocument.id}" var="downloadUrl" />
 				<tr><td>Last ned: </td><td><a href="${downloadUrl}">her</a></td></tr>
 			</table>
 			</p>
