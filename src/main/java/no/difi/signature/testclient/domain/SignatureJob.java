@@ -11,7 +11,7 @@ import java.util.Set;
 public class SignatureJob {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Ssn
@@ -24,9 +24,6 @@ public class SignatureJob {
 
 	private String insensitiveTitle;
 
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	private byte[] asic;
 
 	public SignatureJob() {
 	}
@@ -34,26 +31,26 @@ public class SignatureJob {
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getSsn() {
 		return ssn;
 	}
-	
+
 	public void setSsn(String ssn) {
-        this.ssn = ssn;
-    }
+		this.ssn = ssn;
+	}
 
 	public Document getDocument() {
 		return document;
 	}
-	
+
 	public void setDocument(Document document) {
-        this.document = document;
-    }
+		this.document = document;
+	}
 
 	public String getTitle() {
 		return title;
@@ -71,11 +68,4 @@ public class SignatureJob {
 		this.insensitiveTitle = insensitiveTitle;
 	}
 
-	public byte[] getAsic() {
-		return asic;
-	}
-
-	public void setAsic(byte[] asic) {
-		this.asic = asic;
-	}
 }

@@ -63,9 +63,11 @@ PBLEID-10589	Som tester skal jeg kunne laste ned de signerte dokumentene i alle 
 					<form:label path="document" cssClass="col-sm-2 control-label">Signeringsdokument<br /><small class="text-muted"><em>påkrevd</em></small></form:label>
 					<div class="col-sm-10">
 						<input name="document" id="document" type="file" />
-						<div class="panel panel-default" id="mimeElement">
+						<div style="dispaly: none;" class="panel panel-default" id="mimeElement">
 							<div class="panel-heading">Mimetype: (kan overskrives)</div>
-							<div class="panel-body"><!-- --></div>
+							<div class="panel-body">
+							<input title="Mimetype" autocomplete="off" class="form-control" name="mimetype" id="mimetype" type="text" value="${signatureCommand.mimetype}" />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -117,8 +119,6 @@ PBLEID-10589	Som tester skal jeg kunne laste ned de signerte dokumentene i alle 
 		<br />
 		<script src="//code.jquery.com/jquery-2.1.0.min.js"><!-- --></script>
 		<spring:url value="/common_message.js" var="commonMessageJavascriptUrl"/>
-		<spring:url value="/send_message_page.js" var="sendMessagePageJavascriptUrl"/>
 		<script src="${commonMessageJavascriptUrl}"><!-- --></script>
-		<script src="${sendMessagePageJavascriptUrl}"><!-- --></script>
 	</body>
 </html>

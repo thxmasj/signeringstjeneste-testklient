@@ -59,38 +59,38 @@ public class SignatureController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/", produces = "text/html")
 	public String show_signature_page(Model model) throws ChangeSetPersister.NotFoundException {
-		SignatureCommand signatureCommand = new SignatureCommand();
-		model.addAttribute("signatureCommand", signatureCommand);
+		SignatureJobCommand signatureJobCommand = new SignatureJobCommand();
+		model.addAttribute("signatureCommand", signatureJobCommand);
 		return "signature_page";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/signatures")
-	public String do_the_signing(@Validated @ModelAttribute("signatureCommand") SignatureCommand signatureCommand, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) throws IOException {
-		signatureValidator.validate(signatureCommand, bindingResult);
+	public String do_the_signing(@Validated @ModelAttribute("signatureCommand") SignatureJobCommand signatureJobCommand, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) throws IOException {
+		signatureValidator.validate(signatureJobCommand, bindingResult);
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("signatureCommand", signatureCommand);
+			model.addAttribute("signatureCommand", signatureJobCommand);
 			//model.addAttribute("keyPairAliases", postklientService.getKeypairAliases());
 			model.addAttribute("errors", bindingResult);
 			return "signature_page";
 		}
 		//TODO: DO THE SIGNING....
 		SignatureJob sig = new SignatureJob();
-		sig.setSsn(signatureCommand.getSsn());
-		sig.setDocument(getDocument(signatureCommand));
-		sig.setTitle((signatureCommand.getTitle()));
-		sig.setInsensitiveTitle(signatureCommand.getInsensitiveTitle());
+		sig.setSsn(signatureJobCommand.getSsn());
+		sig.setDocument(getDocument(signatureJobCommand));
+		sig.setTitle((signatureJobCommand.getTitle()));
+		sig.setInsensitiveTitle(signatureJobCommand.getInsensitiveTitle());
 		signatureService.doSignature(sig);
 		return "redirect:/client/signatures/" + sig.getId();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures/{id}")
-	public String show_message_page(@PathVariable Long id, Model model) throws ChangeSetPersister.NotFoundException {
+	public String show_detailed_signaturejob(@PathVariable Long id, Model model) throws ChangeSetPersister.NotFoundException {
 		SignatureJob sig = signatureService.getSignature(id);
 		if (sig == null) {
 			throw new ChangeSetPersister.NotFoundException();
 		}
 		model.addAttribute("signatureJob", sig);
-		return "processed_signature";
+		return "show_detailed_signaturejob";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures")
@@ -115,12 +115,12 @@ public class SignatureController {
 		IOUtils.copy(inputStream, response.getOutputStream());
 	}
 
-	private Document getDocument(SignatureCommand signatureCommand) throws IOException {
+	private Document getDocument(SignatureJobCommand signatureJobCommand) throws IOException {
 		Document document = new Document();
-		document.setTitle(signatureCommand.getTitle());
-		document.setContent(signatureCommand.getDocument().getBytes());
-		document.setFilename(signatureCommand.getDocument().getOriginalFilename());
-		document.setMimetype(signatureCommand.getDocument().getContentType());
+		document.setTitle(signatureJobCommand.getTitle());
+		document.setContent(signatureJobCommand.getDocument().getBytes());
+		document.setFilename(signatureJobCommand.getDocument().getOriginalFilename());
+		document.setMimetype(signatureJobCommand.getMimetype());
 		return document;
 	}
 

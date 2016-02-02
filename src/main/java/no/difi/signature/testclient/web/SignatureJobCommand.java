@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Component
-public class SignatureCommand {
+public class SignatureJobCommand {
 
 
 	@Ssn(message = "Ugyldig fødselsnummer.")
@@ -27,8 +27,9 @@ public class SignatureCommand {
 	@Document(message = "Du må oppgi hoveddokument.")
 	private MultipartFile document;
 
+	private String mimetype;
 
-	public SignatureCommand() {
+	public SignatureJobCommand() {
 	}
 
 	public String getSsn() {
@@ -63,6 +64,11 @@ public class SignatureCommand {
 		this.document = document;
 	}
 
+	public String getMimetype() {
+		return mimetype;
+	}
 
-
+	public void setMimetype(String mimetype) {
+		this.mimetype = mimetype;
+	}
 }
