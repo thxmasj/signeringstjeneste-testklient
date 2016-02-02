@@ -3,9 +3,6 @@ package no.difi.signature.testclient.domain;
 import no.difi.signature.testclient.validation.Ssn;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.Set;
 
 @Entity
 public class SignatureJob {
@@ -20,9 +17,14 @@ public class SignatureJob {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Document document;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	private Document signedDocument;
+
 	private String title;
 
 	private String insensitiveTitle;
+
+	private String statusUrl;
 
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -55,6 +57,14 @@ public class SignatureJob {
         this.document = document;
     }
 
+	public Document getSignedDocument() {
+		return signedDocument;
+	}
+
+	public void setSignedDocument(Document signedDocument) {
+		this.signedDocument = signedDocument;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -77,5 +87,13 @@ public class SignatureJob {
 
 	public void setAsic(byte[] asic) {
 		this.asic = asic;
+	}
+
+	public String getStatusUrl() {
+		return statusUrl;
+	}
+
+	public void setStatusUrl(String statusUrl) {
+		this.statusUrl = statusUrl;
 	}
 }

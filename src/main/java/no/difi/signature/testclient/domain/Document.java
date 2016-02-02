@@ -23,41 +23,60 @@ public class Document {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public byte[] getContent() {
 		return content;
-	}
-
-	public void setContent(byte[] content) {
-		this.content = content;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getFilename() {
 		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
 	}
 
 	public String getMimetype() {
 		return mimetype;
 	}
 
-	public void setMimetype(String mimetype) {
-		this.mimetype = mimetype;
+	public static Builder builder() {
+		return new Builder(new Document());
 	}
 
-	
+	public static class Builder {
+		private Document instance;
+
+		public Builder(Document instance) {
+			this.instance = instance;
+		}
+
+		public Builder content(byte[] content) {
+			instance.content = content;
+			return this;
+		}
+
+		public Builder title(String title) {
+			instance.title = title;
+			return this;
+		}
+
+		public Builder mimeType(String mimeType) {
+			instance.mimetype = mimeType;
+			return this;
+		}
+
+		public Builder fileName(String fileName) {
+			instance.filename = fileName;
+			return this;
+		}
+
+		public Document build() {
+			Document build = instance;
+			instance = null;
+			return build;
+		}
+
+	}
+
+
 }

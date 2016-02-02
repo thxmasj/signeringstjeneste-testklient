@@ -4,11 +4,12 @@ package no.difi.signature.testclient.web;
 import no.difi.signature.testclient.domain.Document;
 import no.difi.signature.testclient.domain.SignatureJob;
 import no.difi.signature.testclient.service.SignatureService;
+import no.digipost.signature.client.direct.DirectJobResponse;
+import no.digipost.signature.client.direct.DirectJobStatusResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.core.env.Environment;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,30 +18,30 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 
 @Controller
 public class SignatureController {
 
 	@Autowired
-	private Environment environment;
-
-
-	@Autowired
 	private SignatureService signatureService;
-
-	static final Logger logger = LoggerFactory.getLogger(SignatureController.class);
 
 	@Autowired
 	@Qualifier("signatureCommandValidator")
@@ -49,6 +50,12 @@ public class SignatureController {
 	@Autowired
 	@Qualifier("mvcValidator")
 	private Validator validator;
+
+	@Autowired
+	private DirectClientController directClient;
+
+	@Autowired
+	private HttpSession session;
 
 	@InitBinder
 	protected void initBinder(WebDataBinder webDataBinder) {
@@ -69,18 +76,33 @@ public class SignatureController {
 		signatureValidator.validate(signatureCommand, bindingResult);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("signatureCommand", signatureCommand);
-			//model.addAttribute("keyPairAliases", postklientService.getKeypairAliases());
 			model.addAttribute("errors", bindingResult);
 			return "signature_page";
 		}
-		//TODO: DO THE SIGNING....
+		DirectJobResponse response = directClient.createJob(signatureCommand.getSsn(), request);
 		SignatureJob sig = new SignatureJob();
 		sig.setSsn(signatureCommand.getSsn());
 		sig.setDocument(getDocument(signatureCommand));
 		sig.setTitle((signatureCommand.getTitle()));
 		sig.setInsensitiveTitle(signatureCommand.getInsensitiveTitle());
+		sig.setStatusUrl(Base64.getUrlEncoder().encodeToString(response.getStatusUrl().getStatusUrl().getBytes("UTF-8")));
 		signatureService.doSignature(sig);
-		return "redirect:/client/signatures/" + sig.getId();
+		session.setAttribute("signatureJobId", sig.getId());
+		return "redirect:" + response.getRedirectUrl();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/signatures/completed")
+	public String getSignedDocument() throws IOException {
+		SignatureJob job = signatureService.getSignature((Long)session.getAttribute("signatureJobId"));
+		DirectJobStatusResponse response = directClient.getStatus(job.getStatusUrl());
+		byte[] padesDocument = directClient.getPadesDocument(base64(response.getpAdESUrl().getpAdESUrl()));
+		Document signedDocument = Document.builder()
+				.content(padesDocument)
+				.mimeType("application/pdf")
+				.build();
+		job.setSignedDocument(signedDocument);
+		signatureService.doSignature(job);
+		return "redirect:/client/signatures/" + job.getId();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/signatures/{id}")
@@ -116,12 +138,17 @@ public class SignatureController {
 	}
 
 	private Document getDocument(SignatureCommand signatureCommand) throws IOException {
-		Document document = new Document();
-		document.setTitle(signatureCommand.getTitle());
-		document.setContent(signatureCommand.getDocument().getBytes());
-		document.setFilename(signatureCommand.getDocument().getOriginalFilename());
-		document.setMimetype(signatureCommand.getDocument().getContentType());
-		return document;
+		return Document.builder()
+				.title(signatureCommand.getTitle())
+				.content(signatureCommand.getDocument().getBytes())
+				.fileName(signatureCommand.getDocument().getOriginalFilename())
+				.mimeType(signatureCommand.getDocument().getContentType())
+				.build();
 	}
+
+	private String base64(String s) throws UnsupportedEncodingException {
+		return Base64.getUrlEncoder().encodeToString(s.getBytes("UTF-8"));
+	}
+
 
 }
