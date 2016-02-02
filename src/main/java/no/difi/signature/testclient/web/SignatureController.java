@@ -79,7 +79,7 @@ public class SignatureController {
 			model.addAttribute("errors", bindingResult);
 			return "signature_page";
 		}
-		DirectJobResponse response = directClient.createJob(signatureCommand.getSsn(), request);
+		DirectJobResponse response = directClient.createJob(signatureJobCommand.getSsn(), request);
 		SignatureJob sig = new SignatureJob();
 		sig.setSsn(signatureJobCommand.getSsn());
 		sig.setDocument(getDocument(signatureJobCommand));
@@ -140,10 +140,10 @@ public class SignatureController {
 
 	private Document getDocument(SignatureJobCommand signatureJobCommand) throws IOException {
 		return Document.builder()
-				.title(signatureCommand.getTitle())
-				.content(signatureCommand.getDocument().getBytes())
-				.fileName(signatureCommand.getDocument().getOriginalFilename())
-				.mimeType(signatureCommand.getMimetype())
+				.title(signatureJobCommand.getTitle())
+				.content(signatureJobCommand.getDocument().getBytes())
+				.fileName(signatureJobCommand.getDocument().getOriginalFilename())
+				.mimeType(signatureJobCommand.getMimetype())
 				.build();
 	}
 
