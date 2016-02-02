@@ -3,15 +3,12 @@ package no.difi.signature.testclient.domain;
 import no.difi.signature.testclient.validation.Ssn;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.Set;
 
 @Entity
 public class SignatureJob {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Ssn
@@ -20,10 +17,18 @@ public class SignatureJob {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Document document;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	private Document signedDocument;
+
 	private String title;
 
 	private String insensitiveTitle;
 
+	private String statusUrl;
+
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private byte[] asic;
 
 	public SignatureJob() {
 	}
@@ -31,25 +36,33 @@ public class SignatureJob {
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getSsn() {
 		return ssn;
 	}
-
+	
 	public void setSsn(String ssn) {
-		this.ssn = ssn;
-	}
+        this.ssn = ssn;
+    }
 
 	public Document getDocument() {
 		return document;
 	}
-
+	
 	public void setDocument(Document document) {
-		this.document = document;
+        this.document = document;
+    }
+
+	public Document getSignedDocument() {
+		return signedDocument;
+	}
+
+	public void setSignedDocument(Document signedDocument) {
+		this.signedDocument = signedDocument;
 	}
 
 	public String getTitle() {
@@ -68,4 +81,19 @@ public class SignatureJob {
 		this.insensitiveTitle = insensitiveTitle;
 	}
 
+	public byte[] getAsic() {
+		return asic;
+	}
+
+	public void setAsic(byte[] asic) {
+		this.asic = asic;
+	}
+
+	public String getStatusUrl() {
+		return statusUrl;
+	}
+
+	public void setStatusUrl(String statusUrl) {
+		this.statusUrl = statusUrl;
+	}
 }

@@ -74,8 +74,7 @@ public class SignatureService {
 		SignatureJob SignatureJob = new SignatureJob();
 		SignatureJob.setId((Long) rawSignature[0]);
 		SignatureJob.setSsn((String) rawSignature[1]);
-		Document document = new Document();
-		document.setTitle((String) rawSignature[2]);
+		Document document = Document.builder().title((String) rawSignature[2]).build();
 		SignatureJob.setDocument(document);
 		return SignatureJob;
 	}
@@ -92,7 +91,6 @@ public class SignatureService {
 
 	public Document getDocument(Long id) {
 		return documentRepository.findOne(id);
-
 	}
 
 	private String getSignaturePartitionChannel() {
