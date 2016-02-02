@@ -102,6 +102,7 @@ public class SignatureController {
 				.build();
 		job.setSignedDocument(signedDocument);
 		signatureService.doSignature(job);
+		directClient.confirmFinished(base64(response.getConfirmationReference().getConfirmationUrl()));
 		return "redirect:/client/signatures/" + job.getId();
 	}
 

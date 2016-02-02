@@ -1,5 +1,6 @@
 package no.difi.signature.testclient.web;
 
+import no.digipost.signature.client.core.ConfirmationReference;
 import no.digipost.signature.client.core.Document;
 import no.digipost.signature.client.core.PAdESReference;
 import no.digipost.signature.client.core.Signer;
@@ -67,6 +68,13 @@ public class DirectClientController {
         return IOUtils.toByteArray(directClient.getXAdES(
                 XAdESReference.of(fromBase64(documentUrl))
         ));
+    }
+
+    @RequestMapping(path = "/jobs/status/{confirmationUrl}", method = RequestMethod.POST)
+    public void confirmFinished(@PathVariable String confirmationUrl) throws UnsupportedEncodingException {
+        directClient.confirm(new DirectJobStatusResponse(
+                0, null, ConfirmationReference.of(fromBase64(confirmationUrl)), null, null)
+        );
     }
 
     private String completedUrl(HttpServletRequest servletRequest) {
