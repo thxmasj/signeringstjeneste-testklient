@@ -1,6 +1,6 @@
 package no.difi.signature.testclient.validation;
 
-import no.difi.signature.testclient.web.SignatureCommand;
+import no.difi.signature.testclient.web.SignatureJobCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,13 +22,13 @@ public class SignatureCommandValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return SignatureCommand.class.equals(aClass);
+        return SignatureJobCommand.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
 
-        SignatureCommand signature = (SignatureCommand) o;
+        SignatureJobCommand signature = (SignatureJobCommand) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ssn", "ssn", "SSN er tomt");
         //basicValidator.validate(signature, errors);
 
